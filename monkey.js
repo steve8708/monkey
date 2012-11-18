@@ -7,7 +7,7 @@ define('monkey', function () {
   var options = options || {};
   var chrome = chrome || null;
 
-  return {
+  var monkey = {
     initialize: function () {
       this._bindChromeEvents();
       return this;
@@ -82,7 +82,7 @@ define('monkey', function () {
       js.innerHTML = '(' + script + ')()';
       document.getElementsByTagName('head')[0].appendChild(js);
       // Don't pollute the html - remove this tag once script evaluates
-      setTimeout(function () { js.parentNode.removeChild(js); }, 10);
+      js.parentNode.removeChild(js);
     },
 
     cleanup: function () {
@@ -223,4 +223,6 @@ define('monkey', function () {
       }, this.delay);
     }
   };
+
+  return monkey.initialize();
 });
