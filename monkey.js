@@ -1,57 +1,25 @@
 ({define:
-    typeof define === "function" ? define :
-    typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
-    function (name, fn) { this.monkey = fn(); }.bind(this)
+  typeof define === "function" ? define :
+  typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
+  function (name, fn) { this.monkey = fn(); }.bind(this)
 }).
 define('monkey', function () {
   var options = options || {};
   var chrome = chrome || null;
 
-  var monkey = {
+  return {
     initialize: function () {
-      this._bindChromeEvents();
+      this.bindMessageListeners();
       return this;
     },
 
-    _bindChromeEvents: function () {
-      if (chrome && chrome.extension) {
-        chrome.extension.onMessage.addListener(function (request, sender, respond) {
-          if (request.type == 'monkey.start')
-            monkey.start();
+    bindMessageListeners: function () {
+      window.addEventListener('message', function (event) {
+        if (event.source != window) return;
 
-          if (request.type == 'monkey.stop')
-            monkey.stop();
-        });
-      }
-    },
-
-    _parseOptions: function (options) {
-      var parse = function (string) {
-        var response;
-        try {
-          response = JSON.parse(string);
-        } catch (error) {
-          response = null;
-        }
-
-        return response;
-      };
-
-      var prepare = function (string) {
-        return string.replace(/\s/g, '').split(',');
-      };
-
-      var obj = {
-        showClick: parse(options.showClick),
-        delay: parse(options.delay),
-        limit: parse(options.limit),
-        is: prepare(options.is),
-        not: prepare(options.not),
-        notParents: prepare(options.notParents),
-        disableTransition: parse(options.disableTransition)
-      };
-
-      return obj;
+        if (event.data.type && event.data.type === 'wasup')
+          alert(event.data.text);
+      });
     },
 
     setOptions: function (options) {
@@ -59,37 +27,11 @@ define('monkey', function () {
         this[key] = options[key];
     },
 
-    setup: function () {
-      this.evaluate(this._setup);
-    },
-
     evaluate: function (fn, context) {
-      if (chrome && chrome.extension)
-        this._injectChrome(fn);
-      else
-        fn.call(context || this);
-    },
-
-    _injectChrome: function (fn) {
-      var script = fn.toString();
-      // Send message to background.js using chrome messaging api
-      // Inject our js into the document
-      var js = document.createElement('script');
-      var path = 'src/injected-scripts/inject-options.js';
-      js.type = 'text/javascript';
-      js.async = true;
-      js.id = "monkey-injected-options";
-      js.innerHTML = '(' + script + ')()';
-      document.getElementsByTagName('head')[0].appendChild(js);
-      // Don't pollute the html - remove this tag once script evaluates
-      js.parentNode.removeChild(js);
+      fn.call(context || this);
     },
 
     cleanup: function () {
-      this.evaluate(this._cleanup);
-    },
-
-    _cleanup: function () {
       window._isTester = false;
       window.alert = window._alert;
       window.open = window._open;
@@ -98,7 +40,7 @@ define('monkey', function () {
     },
 
     // TODO: why is this not working?
-    _setup: function (disableTransition) {
+    setup: function (disableTransition) {
       window._isTester = true;
 
       window._alert = window.alert;
@@ -114,11 +56,11 @@ define('monkey', function () {
 
       window._onerror = window.onerror;
       window.onerror = function () {
-        if (_onerror) _onerror();
-        window._alert('ERROR: ' + [].join.call(arguments, ' '));
+        if (this.onerror) this.onerror();
       };
 
-      // $(document).on('click', 'a', function (e) { e.preventDefault(); });
+      if (this.options.preventRedirect)
+        $(document).on('click', 'a', function (e) { e.preventDefault(); });
     },
 
     stop: function () {
@@ -126,7 +68,9 @@ define('monkey', function () {
       this.cleanup();
     },
 
-    onerror: function () {},
+    onerror: function () {
+      // window._alert('ERROR: ' + [].join.call(arguments, ' '));
+    },
 
     start: function (dontReset) {
       this.stop();
@@ -177,17 +121,6 @@ define('monkey', function () {
         this.$dot.remove();
     },
 
-    _click: function ($el) {
-      var touch = $('html').is('.touch');
-
-      if ($el.is('a') && !touch)
-        var $div = $('<div></div>').appendTo($el).click().remove();
-      else if (touch)
-        $el.trigger('touchstart').trigger('touchend');
-      else
-        $el.click();
-    },
-
     monkey: function () {
       this.removeDot();
 
@@ -214,7 +147,8 @@ define('monkey', function () {
       if (this.showClick)
         this.$dot.css({top: top, left: left}).appendTo(document.body);
 
-      this._click($button);
+      // this._click($button);
+      $button.click();
 
       var self = this;
       setTimeout(function () {
@@ -223,6 +157,4 @@ define('monkey', function () {
       }, this.delay);
     }
   };
-
-  return monkey.initialize();
 });
