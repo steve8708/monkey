@@ -7,7 +7,7 @@ define('monkey', function () {
   var options = options || {};
   var chrome = chrome || null;
 
-  return {
+  var monkey = {
     initialize: function () {
       this.bindMessageListeners();
       return this;
@@ -158,4 +158,6 @@ define('monkey', function () {
       }, this.delay);
     }
   };
+
+  return monkey.initialize();
 });
