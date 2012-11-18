@@ -1,6 +1,6 @@
 ({define:
-  typeof define === "function" ? define :
-  typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
+  // typeof define === "function" ? define :
+  // typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
   function (name, fn) { this.monkey = fn(); }.bind(this)
 }).
 define('monkey', function () {
