@@ -108,7 +108,7 @@ define('monkey', function () {
         }
 
         if (!this.$overlay || !this.$overlay.is(':visible'))
-          $('<pre style="color: white;">')
+          this.$overlay = $('<pre style="color: white;">')
             .appendTo(this.$overlayContainer);
 
         this.$overlay.append(JSON.stringify([].slice.call(arguments), null, 2) + '\n');
