@@ -19,7 +19,7 @@ define('monkey', function () {
       limit: 200,
       _count: 0,
       stopOnError: false,
-      overlayErrors: true,
+      overlayErrors: false,
 
       is: 'a',
       not: ['script', '[data-next-button=logout]'],
@@ -29,10 +29,10 @@ define('monkey', function () {
       hasParents: ['body'],
 
       dot: '<div style="width: 40px; height: 40px; border-radius: 100px;' +
-        'position: absolute; z-index: 9999; margin: -20px' +
-        'border-top: 2px solid rgba(255, 200, 200, 1);' +
-        'background-color: rgba(255, 100, 100, 0.8);' +
-        'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);">'
+           'position: absolute; z-index: 9999; margin: -20px' +
+           'border-top: 2px solid rgba(255, 200, 200, 1);' +
+           'background-color: rgba(255, 100, 100, 0.8);' +
+           'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);">'
     },
 
     bindMessageListeners: function () {
@@ -95,7 +95,11 @@ define('monkey', function () {
         this.stop();
 
       if (this.options.overlayErrors) {
-        this.$overlayContainer = this.$overlayContainer || $('<div style="overflow: scroll; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); color: white; pointer-events: none; box-sizing: border-box; padding: 50px; z-index: 999999999">')
+        this.$overlayContainer = this.$overlayContainer ||
+          $('<div style="overflow: scroll; position: fixed; top: 0; left: 0;' +
+            'bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5);' +
+            'color: white; box-sizing: border-box; padding: 50px;' +
+            'z-index: 999999999">')
           .appendTo('body');
         this.$overlay = this.$overlay || $('<pre style="color: white;">')
           .appendTo(this.$overlayContainer);
