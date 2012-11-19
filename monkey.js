@@ -62,10 +62,10 @@ define('monkey', function () {
     setup: function () {
       window._isTester = true;
 
-      this._alert = alert;
+      monkey._alert = alert;
       window.alert = function () {};
 
-      this._open = open;
+      monkey._open = open;
       window.open = function () {
         var obj = {};
         for (var key in window)
@@ -73,7 +73,7 @@ define('monkey', function () {
         return obj;
       };
 
-      this._onerror = onerror;
+      monkey._onerror = onerror;
       window.onerror = function () {
         if (monkey.onerror) monkey.onerror();
       };
@@ -92,7 +92,7 @@ define('monkey', function () {
     },
 
     onerror: function () {
-      this._alert('ERROR: ' + [].join.call(arguments, ' '));
+      monkey._alert('ERROR: ' + [].join.call(arguments, ' '));
     },
 
     start: function (options) {
