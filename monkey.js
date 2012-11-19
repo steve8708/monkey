@@ -21,6 +21,7 @@ define('monkey', function () {
       stopOnError: false,
       overlayErrors: true,
       verbose: false,
+      preventRedirect: false,
 
       is: 'a',
       not: ['script', '[data-next-button=logout]'],
@@ -77,8 +78,21 @@ define('monkey', function () {
         if (monkey.onerror) monkey.onerror.apply(monkey, arguments);
       };
 
-      if (this.options.preventRedirect)
+      if (this.options.preventRedirect) {
         $(document).on('click', 'a', function (e) { e.preventDefault(); });
+        window.onbeforeunload = function () {
+          window._i = window._1 || 0;
+          var href = window.location.href;
+          if (window._i > 0) {
+            window._i--;
+          } else {
+            setTimeout(function () {
+              window._i++;
+              window.location.href = href;
+            }, 1);
+          }
+        };
+      }
 
       var transition = (!this.options.disableTransition).toString();
       $(document.body).attr('data-transition', transition);
