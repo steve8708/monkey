@@ -52,15 +52,17 @@ define('monkey', function () {
 
     cleanup: function () {
       window._isTester = false;
-      window.alert = window._alert;
-      window.open = window._open;
-      window.onerror = window._onerror;
+      // window.alert = window._alert;
+      // window.open = window._open;
+      // window.onerror = window._onerror;
       $(document.body).attr('data-transition', 'true');
     },
 
     // TODO: why is this not working?
     setup: function () {
       window._isTester = true;
+
+      alert('hello');
 
       // window._alert = window.alert;
       // window.alert = function () {};
@@ -93,7 +95,7 @@ define('monkey', function () {
     },
 
     onerror: function () {
-      window._alert('ERROR: ' + [].join.call(arguments, ' '));
+      // window._alert('ERROR: ' + [].join.call(arguments, ' '));
     },
 
     start: function (options) {
