@@ -89,7 +89,7 @@ define('monkey', function () {
             setTimeout(function () {
               window._i++;
               window.location.href = href;
-            }, 0);
+            }, 1);
           }
         };
       }
