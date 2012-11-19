@@ -1,5 +1,5 @@
 ({define:
-  // typeof define === "function" ? define :
+  typeof define === "function" ? define :
   typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
   function (name, fn) { this.monkey = fn(); }.bind(this)
 }).
@@ -23,10 +23,9 @@ define('monkey', function () {
 
       is: 'a',
       not: ['script', '[data-next-button=logout]'],
+      hasParents: ['body'],
       notParents: ['[data-stage=right]', '[data-stage=left]',
         '[data-stage=up]', '[data-next-button=logout]', 'script'],
-
-      hasParents: ['body'],
 
       dot: '<div style="width: 40px; height: 40px; border-radius: 100px;' +
            'position: absolute; z-index: 9999; margin: -20px;' +
