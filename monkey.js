@@ -13,6 +13,28 @@ define('monkey', function () {
       return this;
     },
 
+    options: {
+      disableTransition: true,
+      showClick: true,
+      delay: 100,
+      limit: 200,
+      _count: 0,
+
+      is: 'a',
+      not: ['script', '[data-next-button=logout]'],
+      notParents: ['[data-stage=right]', '[data-stage=left]',
+        '[data-stage=up]', '[data-next-button=logout]', 'script'],
+
+      hasParents: ['body'],
+
+      dot: '<div style="width: 40px; height: 40px; border-radius: 100px;' +
+        'position: absolute; z-index: 9999; margin: -20px' +
+        'border-top: 2px solid rgba(255, 200, 200, 1);' +
+        'background-color: rgba(255, 100, 100, 0.8);' +
+        'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);"></div>'
+      }
+    },
+
     bindMessageListeners: function () {
       var self = this;
       window.addEventListener('message', function (event) {
@@ -23,7 +45,7 @@ define('monkey', function () {
 
     setOptions: function (options) {
       for (var key in options)
-        this[key] = options[key];
+        this.options[key] = options[key];
     },
 
     evaluate: function (fn, context) {
@@ -72,6 +94,7 @@ define('monkey', function () {
     },
 
     start: function (dontReset) {
+      alert('start');
       this.stop();
       this.removeDot();
       this.setup();
@@ -96,25 +119,6 @@ define('monkey', function () {
       this.monkey();
     },
 
-    disableTransition: true,
-    showClick: true,
-    delay: 100,
-    limit: 200,
-    _count: 0,
-
-    is: 'a',
-    not: ['script', '[data-next-button=logout]'],
-    notParents: ['[data-stage=right]', '[data-stage=left]',
-      '[data-stage=up]', '[data-next-button=logout]', 'script'],
-
-    hasParents: ['body'],
-
-    dot: '<div style="width: 40px; height: 40px; border-radius: 100px;' +
-      'background-color: rgba(255, 100, 100, 0.8);' +
-      'border-top: 2px solid rgba(255, 200, 200, 1);' +
-      ' box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); position: absolute; z-index: 9999; ' +
-      'margin: -20px;"></div>',
-
     removeDot: function () {
       if (this.$dot)
         this.$dot.remove();
@@ -126,9 +130,10 @@ define('monkey', function () {
       if (this._stop || this._count > this.limit)
         return this.stop();
 
-      var notParents = this.notParents.join(',')
-        , not = this.not.join(',')
-        , selector = 'body ' + this.is + ':not(' + not + ')'
+      var opts = this.options;
+      var notParents = opts.notParents.join(',')
+        , not = opts.not.join(',')
+        , selector = 'body ' + opts.is + ':not(' + not + ')'
         , $el = $(selector)
         , len = $el.length
         , random = Math.floor(Math.random() * len)
@@ -142,7 +147,7 @@ define('monkey', function () {
       if ($button.parents(notParents).length > 0)
         return this.monkey();
 
-      this.$dot = $(this.dot);
+      this.$dot = $(opts.dot);
       if (this.showClick)
         this.$dot.css({top: top, left: left}).appendTo(document.body);
 
@@ -153,7 +158,7 @@ define('monkey', function () {
       setTimeout(function () {
         self._count++;
         self.monkey();
-      }, this.delay);
+      }, opts.delay);
     }
   };
 
