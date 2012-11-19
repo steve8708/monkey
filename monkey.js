@@ -14,10 +14,10 @@ define('monkey', function () {
     },
 
     bindMessageListeners: function () {
-      alert('hi');
+      var self = this;
       window.addEventListener('message', function (event) {
-        // if (event.data.type && event.data.type === 'wasup')
-          alert(event.data.text);
+        if (event.data.type && event.data.type === 'monkey')
+          self[self.data.command](self.data.options);
       });
     },
 
