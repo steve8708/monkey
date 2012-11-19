@@ -32,7 +32,6 @@ define('monkey', function () {
         'border-top: 2px solid rgba(255, 200, 200, 1);' +
         'background-color: rgba(255, 100, 100, 0.8);' +
         'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);"></div>'
-      }
     },
 
     bindMessageListeners: function () {
