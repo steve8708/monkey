@@ -95,8 +95,10 @@ define('monkey', function () {
         this.stop();
 
       if (this.options.overlayErrors) {
-        this.$overlay = this.$overlay || $('<pre style="position: absolute; top: 0; left: 0; min-height: 100%; background-color: rgba(0, 0, 0, 0.5); color: white; pointer-events: none; box-sizing: border-box; padding: 50px; z-index: 999999999">')
+        this.$overlayContainer = this.$overlayContainer || $('<div style="overflow: scroll; position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); color: white; pointer-events: none; box-sizing: border-box; padding: 50px; z-index: 999999999">')
           .appendTo('body');
+        this.$overlay = this.$overlay || $('<pre style="color: white;">')
+          .appendTo(this.$overlayContainer);
         this.$overlay.append(JSON.stringify([].slice.call(arguments), null, 2) + '\n');
       }
     },
