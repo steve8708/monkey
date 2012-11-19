@@ -75,6 +75,7 @@ define('monkey', function () {
 
       window._onerror = window.onerror;
       window.onerror = function () {
+        alert('hi');
         if (monkey.onerror) monkey.onerror();
       };
 
