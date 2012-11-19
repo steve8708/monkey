@@ -1,6 +1,6 @@
 ({define:
   // typeof define === "function" ? define :
-  // typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
+  typeof module !== "undefined" ? function (name, fn) { module.exports = fn(); } :
   function (name, fn) { this.monkey = fn(); }.bind(this)
 }).
 define('monkey', function () {
@@ -10,6 +10,7 @@ define('monkey', function () {
   var monkey = {
     initialize: function () {
       this.bindMessageListeners();
+      this.touch = $('html').is('touch');
       return this;
     },
 
@@ -150,8 +151,10 @@ define('monkey', function () {
       if (opts.showClick)
         this.$dot.css({top: top, left: left}).appendTo(document.body);
 
-      // this._click($button);
-      $button.click();
+      if (this.touch)
+        $button.trigger('touchstart').trigger('touchend');
+      else
+        $button.click();
 
       var self = this;
       setTimeout(function () {
