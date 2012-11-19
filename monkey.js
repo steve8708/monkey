@@ -60,7 +60,7 @@ define('monkey', function () {
     },
 
     // TODO: why is this not working?
-    setup: function (disableTransition) {
+    setup: function () {
       window._isTester = true;
 
       window._alert = window.alert;
@@ -111,7 +111,7 @@ define('monkey', function () {
 
     // TODO: rename this not so ugly
     _start: function () {
-      var transition = !this.options.disableTransition.toString();
+      var transition = (!this.options.disableTransition).toString();
       $(document.body).attr('data-transition', transition);
       if (options.setup) options.setup();
       this._stop = false;
