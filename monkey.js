@@ -16,7 +16,7 @@ define('monkey', function () {
       disableTransition: true,
       showClick: true,
       delay: 100,
-      limit: 200,
+      limit: 50,
       _count: 0,
       stopOnError: false,
       overlayErrors: true,
