@@ -96,14 +96,16 @@ define('monkey', function () {
       // window._alert('ERROR: ' + [].join.call(arguments, ' '));
     },
 
-    start: function () {
+    start: function (options) {
       this.stop();
       this.removeDot();
       this.setup();
       if (options.setup) options.setup();
       this._stop = false;
 
-      this.touch = $('html').is('touch');
+      if (options) this.setOptions(options);
+
+      this.touch = $('html').is('.touch');
       this._count = 0;
 
       this.monkey();
