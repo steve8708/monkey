@@ -52,9 +52,9 @@ define('monkey', function () {
 
     cleanup: function () {
       window._isTester = false;
-      // window.alert = window._alert;
-      // window.open = window._open;
-      // window.onerror = window._onerror;
+      window.alert = this._alert;
+      window.open = this._open;
+      window.onerror = this._onerror;
       $(document.body).attr('data-transition', 'true');
     },
 
@@ -62,12 +62,10 @@ define('monkey', function () {
     setup: function () {
       window._isTester = true;
 
-      alert('hello');
+      this._alert = alert;
+      window.alert = function () {};
 
-      // window._alert = window.alert;
-      // window.alert = function () {};
-
-      window._open = window.open;
+      this._open = open;
       window.open = function () {
         var obj = {};
         for (var key in window)
@@ -75,9 +73,8 @@ define('monkey', function () {
         return obj;
       };
 
-      window._onerror = window.onerror;
+      this._onerror = onerror;
       window.onerror = function () {
-        alert('hi');
         if (monkey.onerror) monkey.onerror();
       };
 
@@ -95,7 +92,7 @@ define('monkey', function () {
     },
 
     onerror: function () {
-      // window._alert('ERROR: ' + [].join.call(arguments, ' '));
+      this._alert('ERROR: ' + [].join.call(arguments, ' '));
     },
 
     start: function (options) {
