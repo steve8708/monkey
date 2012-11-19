@@ -96,14 +96,16 @@ define('monkey', function () {
         this.stop();
 
       if (this.options.overlayErrors) {
-        this.$overlayContainer = this.$overlayContainer.is(':visible') ||
-          $('<div style="overflow: scroll; position: fixed; top: 0;' +
+        if (!this.$overlayContainer || !this.$overlayContainer.is(':visible')) {
+          this.$overlayContainer =
+            $('<div style="overflow: scroll; position: fixed; top: 0;' +
             'left: 0; bottom: 0; right: 0; background-image:' +
             '-webkit-radial-gradient(circle, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.6));' +
             '-webkit-overflow-scrolling: touch;' +
             'color: white; box-sizing: border-box; padding: 50px;' +
             'z-index: 999999999">')
-          .appendTo('body').on('click touchend', function () { $(this).remove(); });
+            .appendTo('body').on('click touchend', function () { $(this).remove(); });
+        }
 
         this.$overlay = this.$overlay || $('<pre style="color: white;">')
           .appendTo(this.$overlayContainer);
