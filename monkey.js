@@ -10,7 +10,6 @@ define('monkey', function () {
   var monkey = {
     initialize: function () {
       this.bindMessageListeners();
-      this.touch = $('html').is('touch');
       return this;
     },
 
@@ -82,6 +81,10 @@ define('monkey', function () {
 
       if (this.options.preventRedirect)
         $(document).on('click', 'a', function (e) { e.preventDefault(); });
+
+      var transition = (!this.options.disableTransition).toString();
+      $(document.body).attr('data-transition', transition);
+
     },
 
     stop: function () {
@@ -93,29 +96,16 @@ define('monkey', function () {
       // window._alert('ERROR: ' + [].join.call(arguments, ' '));
     },
 
-    start: function (dontReset) {
+    start: function () {
       this.stop();
       this.removeDot();
       this.setup();
-      if (!dontReset) this._count = 0;
-
-      var self = this;
-      if (chrome && chrome.extension) {
-        chrome.extension.sendMessage({get: 'options'}, function (response) {
-          self.setOptions(self._parseOptions(response.options));
-          self._start();
-        });
-      } else {
-        this._start();
-      }
-    },
-
-    // TODO: rename this not so ugly
-    _start: function () {
-      var transition = (!this.options.disableTransition).toString();
-      $(document.body).attr('data-transition', transition);
       if (options.setup) options.setup();
       this._stop = false;
+
+      this.touch = $('html').is('touch');
+      this._count = 0;
+
       this.monkey();
     },
 
