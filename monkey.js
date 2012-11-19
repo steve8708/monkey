@@ -104,11 +104,13 @@ define('monkey', function () {
             '-webkit-overflow-scrolling: touch;' +
             'color: white; box-sizing: border-box; padding: 50px;' +
             'z-index: 999999999">')
-            .appendTo('body').on('click touchend', function () { $(this).remove(); });
+            .appendTo('body').on('click', function () { $(this).remove(); });
         }
 
-        this.$overlay = this.$overlay || $('<pre style="color: white;">')
-          .appendTo(this.$overlayContainer);
+        if (!this.$overlay || !this.$overlay.is(':visible'))
+          $('<pre style="color: white;">')
+            .appendTo(this.$overlayContainer);
+
         this.$overlay.append(JSON.stringify([].slice.call(arguments), null, 2) + '\n');
       }
     },
