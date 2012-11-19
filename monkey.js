@@ -126,7 +126,9 @@ define('monkey', function () {
           this.$overlay = $('<pre style="color: white;">')
             .appendTo(this.$overlayContainer);
 
-        this.$overlay.append(JSON.stringify([].slice.call(arguments), null, 2) + '\n');
+        var args = [].slice.call(arguments);
+        args.push(window.location.href);
+        this.$overlay.append(JSON.stringify(args, null, 2) + '\n');
       }
     },
 
