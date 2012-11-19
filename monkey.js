@@ -55,9 +55,9 @@ define('monkey', function () {
 
     cleanup: function () {
       window._isTester = false;
-      window.alert = this._alert;
-      window.open = this._open;
-      window.onerror = this._onerror;
+      // window.alert = this._alert;
+      // window.open = this._open;
+      // window.onerror = this._onerror;
       $(document.body).attr('data-transition', 'true');
     },
 
