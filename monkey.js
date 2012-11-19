@@ -31,7 +31,7 @@ define('monkey', function () {
         'position: absolute; z-index: 9999; margin: -20px' +
         'border-top: 2px solid rgba(255, 200, 200, 1);' +
         'background-color: rgba(255, 100, 100, 0.8);' +
-        'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);"></div>'
+        'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);">'
     },
 
     bindMessageListeners: function () {
@@ -93,7 +93,6 @@ define('monkey', function () {
     },
 
     start: function (dontReset) {
-      alert('start');
       this.stop();
       this.removeDot();
       this.setup();
@@ -147,7 +146,7 @@ define('monkey', function () {
         return this.monkey();
 
       this.$dot = $(opts.dot);
-      if (this.showClick)
+      if (opts.showClick)
         this.$dot.css({top: top, left: left}).appendTo(document.body);
 
       // this._click($button);
