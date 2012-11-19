@@ -29,7 +29,7 @@ define('monkey', function () {
       hasParents: ['body'],
 
       dot: '<div style="width: 40px; height: 40px; border-radius: 100px;' +
-           'position: absolute; z-index: 9999; margin: -20px' +
+           'position: absolute; z-index: 9999; margin: -20px;' +
            'border-top: 2px solid rgba(255, 200, 200, 1);' +
            'background-color: rgba(255, 100, 100, 0.8);' +
            'box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);">'
