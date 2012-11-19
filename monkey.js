@@ -82,6 +82,8 @@ define('monkey', function () {
       var transition = (!this.options.disableTransition).toString();
       $(document.body).attr('data-transition', transition);
 
+      if (this.$overlayContainer)
+        this.$overlayContainer.remove();
     },
 
     stop: function () {
@@ -95,8 +97,8 @@ define('monkey', function () {
 
       if (this.options.overlayErrors) {
         this.$overlayContainer = this.$overlayContainer ||
-          $('<div style="overflow: scroll; position: fixed; top: 0; left: 0;' +
-            'bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5);' +
+          $('<div id="monkey-overlay" style="position: fixed; top: 0;' +
+            'left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5);' +
             'color: white; box-sizing: border-box; padding: 50px;' +
             'z-index: 999999999">')
           .appendTo('body');
