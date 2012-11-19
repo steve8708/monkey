@@ -18,6 +18,8 @@ define('monkey', function () {
       delay: 100,
       limit: 200,
       _count: 0,
+      stopOnError: false,
+      overlayErrors: true,
 
       is: 'a',
       not: ['script', '[data-next-button=logout]'],
@@ -62,10 +64,8 @@ define('monkey', function () {
     setup: function () {
       window._isTester = true;
 
-      monkey._alert = alert;
       window.alert = function () {};
 
-      monkey._open = open;
       window.open = function () {
         var obj = {};
         for (var key in window)
@@ -73,7 +73,6 @@ define('monkey', function () {
         return obj;
       };
 
-      monkey._onerror = onerror;
       window.onerror = function () {
         if (monkey.onerror) monkey.onerror();
       };
@@ -92,7 +91,14 @@ define('monkey', function () {
     },
 
     onerror: function () {
-      monkey._alert('ERROR: ' + [].join.call(arguments, ' '));
+      if (this.options.stopOnError)
+        this.stop();
+
+      if (this.options.overlayErrors) {
+        this.$overlay = this.$overlay || $('<div style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); color: white; pointer-events: none;')
+          .appendTo('body');
+        this.$overlay.append(JSON.stringify(arguments));
+      }
     },
 
     start: function (options) {
