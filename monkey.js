@@ -20,6 +20,7 @@ define('monkey', function () {
       _count: 0,
       stopOnError: false,
       overlayErrors: true,
+      verbose: false,
 
       is: 'a',
       not: ['script', '[data-next-button=logout]'],
@@ -98,7 +99,7 @@ define('monkey', function () {
       if (this.options.overlayErrors) {
         if (!this.$overlayContainer || !this.$overlayContainer.is(':visible')) {
           this.$overlayContainer =
-            $('<div style="overflow: scroll; position: fixed; top: 0;' +
+            $('<div id="__M__" style="overflow: scroll; position: fixed; top: 0;' +
             'left: 0; bottom: 0; right: 0; background-image:' +
             '-webkit-radial-gradient(circle, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.6));' +
             '-webkit-overflow-scrolling: touch;' +
@@ -157,6 +158,9 @@ define('monkey', function () {
 
       if ($button.parents(notParents).length > 0)
         return this.monkey();
+
+      if (opts.verbose)
+        console.log('<MONKEY:> ' + window.location.href);
 
       this.$dot = $(opts.dot);
       if (opts.showClick)
