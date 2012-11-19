@@ -111,7 +111,8 @@ define('monkey', function () {
 
     // TODO: rename this not so ugly
     _start: function () {
-      $(document.body).attr('data-transition', (!this.disableTransition).toString());
+      var transition = !this.options.disableTransition.toString();
+      $(document.body).attr('data-transition', transition);
       if (options.setup) options.setup();
       this._stop = false;
       this.monkey();
