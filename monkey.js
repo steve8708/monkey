@@ -17,7 +17,7 @@ define('monkey', function () {
       var self = this;
       window.addEventListener('message', function (event) {
         if (event.data.type && event.data.type === 'monkey')
-          self[self.data.command](self.data.options);
+          self[event.data.command](event.data.options);
       });
     },
 
