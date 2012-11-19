@@ -74,7 +74,7 @@ define('monkey', function () {
       };
 
       window.onerror = function () {
-        if (monkey.onerror) monkey.onerror();
+        if (monkey.onerror) monkey.onerror.apply(monkey, arguments);
       };
 
       if (this.options.preventRedirect)
@@ -95,9 +95,9 @@ define('monkey', function () {
         this.stop();
 
       if (this.options.overlayErrors) {
-        this.$overlay = this.$overlay || $('<div style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); color: white; pointer-events: none;">')
+        this.$overlay = this.$overlay || $('<pre style="position: fixed; top: 0; left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5); color: white; pointer-events: none; box-sizing: border-box; padding: 50px; z-index: 999999999">')
           .appendTo('body');
-        this.$overlay.append(JSON.stringify(arguments));
+        this.$overlay.append(JSON.stringify(arguments, null, 2) + '\n');
       }
     },
 
