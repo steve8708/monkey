@@ -62,8 +62,8 @@ define('monkey', function () {
     setup: function () {
       window._isTester = true;
 
-      window._alert = window.alert;
-      window.alert = function () {};
+      // window._alert = window.alert;
+      // window.alert = function () {};
 
       window._open = window.open;
       window.open = function () {
