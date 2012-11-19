@@ -4,7 +4,6 @@
   function (name, fn) { this.monkey = fn(); }.bind(this)
 }).
 define('monkey', function () {
-  var options = options || {};
   var chrome = chrome || null;
 
   var monkey = {
@@ -100,7 +99,7 @@ define('monkey', function () {
       this.stop();
       this.removeDot();
       this.setup();
-      if (options.setup) options.setup();
+      if (options && options.setup) options.setup();
       this._stop = false;
 
       if (options) this.setOptions(options);
