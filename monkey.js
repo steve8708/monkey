@@ -19,7 +19,7 @@ define('monkey', function () {
       limit: 200,
       _count: 0,
       stopOnError: false,
-      overlayErrors: false,
+      overlayErrors: true,
 
       is: 'a',
       not: ['script', '[data-next-button=logout]'],
