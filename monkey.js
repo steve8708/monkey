@@ -99,7 +99,7 @@ define('monkey', function () {
         this.$overlayContainer = this.$overlayContainer ||
           $('<div style="overflow: scroll; position: fixed; top: 0;' +
             'left: 0; bottom: 0; right: 0; background-image:' +
-            '-webkit-radial-gradient(circle, rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.6));' +
+            '-webkit-radial-gradient(circle, rgba(0, 0, 0, 0.5),rgba(0, 0, 0, 0.6));' +
             'color: white; box-sizing: border-box; padding: 50px;' +
             'z-index: 999999999">')
           .appendTo('body');
