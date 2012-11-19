@@ -97,7 +97,7 @@ define('monkey', function () {
 
       if (this.options.overlayErrors) {
         this.$overlayContainer = this.$overlayContainer ||
-          $('<div id="monkey-overlay" style="position: fixed; top: 0;' +
+          $('<div style="overflow: scroll; position: fixed; top: 0;' +
             'left: 0; bottom: 0; right: 0; background-color: rgba(0, 0, 0, 0.5);' +
             'color: white; box-sizing: border-box; padding: 50px;' +
             'z-index: 999999999">')
