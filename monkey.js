@@ -84,12 +84,12 @@ define('monkey', function () {
           window._i = window._1 || 0;
           var href = window.location.href;
           if (window._i > 0) {
-            window._i--;
+            window._i = 0;
           } else {
             setTimeout(function () {
               window._i++;
               window.location.href = href;
-            }, 1);
+            }, 0);
           }
         };
       }
