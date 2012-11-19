@@ -75,7 +75,7 @@ define('monkey', function () {
 
       window._onerror = window.onerror;
       window.onerror = function () {
-        if (this.onerror) this.onerror();
+        if (monkey.onerror) monkey.onerror();
       };
 
       if (this.options.preventRedirect)
@@ -92,7 +92,7 @@ define('monkey', function () {
     },
 
     onerror: function () {
-      // window._alert('ERROR: ' + [].join.call(arguments, ' '));
+      window._alert('ERROR: ' + [].join.call(arguments, ' '));
     },
 
     start: function (options) {
