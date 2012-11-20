@@ -74,7 +74,9 @@ define('monkey', function () {
         return obj;
       };
 
+      var _onerror = window.onerror;
       window.onerror = function () {
+        if (_onerror) _onerror();
         if (monkey.onerror) monkey.onerror.apply(monkey, arguments);
       };
 
