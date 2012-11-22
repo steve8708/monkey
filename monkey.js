@@ -66,6 +66,7 @@ define('monkey', function () {
       window._isTester = true;
 
       window.alert = function () {};
+      window.confirm = function () { return true; };
 
       window.open = function () {
         var obj = {};
